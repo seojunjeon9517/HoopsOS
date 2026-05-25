@@ -78,3 +78,26 @@ class AdvancedLineup:
                 "elite_shooters_count": elite_shooters
             }
         }
+    if __name__ == "__main__":
+    print("🏀 HoopsOS - Advanced Analytics Engine 가동...\n")
+
+    # 실험군 A: 볼 점유율이 겹치고 슈터가 부족한 과부하 라인업 (루카 + 하든 + 트레이영 + 자모란트 + 고베어)
+    overloaded_squad = [
+        AdvancedPlayer("Luka Doncic", "Offensive Engine", "Main Handler", {"Shooting": 82, "Passing": 98, "RimPressure": 88, "Defense": 65}, PlayerDNA(80, 95, 75, 92)),
+        AdvancedPlayer("James Harden", "Main Handler", "Isolation Scorer", {"Shooting": 85, "Passing": 92, "RimPressure": 80, "Defense": 60}, PlayerDNA(70, 92, 70, 88)),
+        AdvancedPlayer("Trae Young", "Main Handler", "Pick&Roll Operator", {"Shooting": 84, "Passing": 95, "RimPressure": 70, "Defense": 45}, PlayerDNA(65, 88, 85, 95)),
+        AdvancedPlayer("Ja Morant", "Main Handler", "Transition Initiator", {"Shooting": 75, "Passing": 85, "RimPressure": 95, "Defense": 55}, PlayerDNA(60, 85, 98, 90)),
+        AdvancedPlayer("Rudy Gobert", "Rim Protector", "Rim Runner", {"Shooting": 30, "Passing": 55, "RimPressure": 85, "Defense": 98}, PlayerDNA(40, 10, 65, 75))
+    ]
+
+    analyzer = AdvancedLineup(overloaded_squad)
+    report = analyzer.calculate_advanced_score()
+
+    print("⚠️ [실험군 A: 핸들러 과부하 라인업 분석]")
+    print(f" ▫️ 라인업 내 메인 핸들러 수: {report['balance_report']['handler_count']}명")
+    print(f" ▫️ 볼 점유율 과부하 여부: {'🚨 위험 (패널티 발생)' if report['balance_report']['is_overloaded'] else '✅ 안정'}")
+    
+    print("\n📊 최종 보정 지표 결과:")
+    for metric, score in report["metrics"].items():
+        print(f"   • {metric.ljust(20)}: {score}점")
+        
